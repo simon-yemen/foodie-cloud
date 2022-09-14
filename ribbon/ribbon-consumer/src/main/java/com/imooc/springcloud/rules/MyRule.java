@@ -18,11 +18,10 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 /**
- * Created by 半仙.
+ * 自定义负载均衡策略-一致性哈希
  */
 @NoArgsConstructor
 public class MyRule extends AbstractLoadBalancerRule implements IRule {
-
 
     @Override
     public void initWithNiwsConfig(IClientConfig iClientConfig) {
@@ -34,8 +33,8 @@ public class MyRule extends AbstractLoadBalancerRule implements IRule {
         HttpServletRequest request = ((ServletRequestAttributes)
                 RequestContextHolder.getRequestAttributes())
                 .getRequest();
-
         String uri = request.getServletPath() + "?" + request.getQueryString();
+        // getLoadBalancer父类中实现了该方法，获取所有的服务列表
         return route(uri.hashCode(), getLoadBalancer().getAllServers());
     }
 
@@ -45,8 +44,9 @@ public class MyRule extends AbstractLoadBalancerRule implements IRule {
         }
 
         TreeMap<Long, Server> address = new TreeMap<>();
-        addressList.stream().forEach(e -> {
-            // 虚化若干个服务节点，到环上
+        // 虚化若干个服务节点，到环上
+        addressList.forEach(e -> {
+            // 这里假定8个虚拟节点，每个服务虚拟化8次放入环中
             for (int i = 0; i < 8; i++) {
                 long hash = hash(e.getId() + i);
                 address.put(hash, e);
@@ -54,13 +54,13 @@ public class MyRule extends AbstractLoadBalancerRule implements IRule {
         });
 
         long hash = hash(String.valueOf(hashId));
+        // tailMap找到离该hash最近且大于该hash的key的map
         SortedMap<Long, Server> last = address.tailMap(hash);
         // 当request URL的hash值大于任意一个服务器对应的hashKey，
         // 取address中的第一个节点
         if (last.isEmpty()) {
             address.firstEntry().getValue();
         }
-
         return last.get(last.firstKey());
     }
 
@@ -72,7 +72,7 @@ public class MyRule extends AbstractLoadBalancerRule implements IRule {
             throw new RuntimeException(e);
         }
 
-        byte[] keyByte = null;
+        byte[] keyByte;
         try {
             keyByte = key.getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {

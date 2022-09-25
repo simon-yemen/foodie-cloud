@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class Fallback implements MyService {
 
     @Override
+    // 定义多次降级逻辑
     @HystrixCommand(fallbackMethod = "fallback2")
     public String error() {
         log.info("Fallback: I'm not a black sheep any more");

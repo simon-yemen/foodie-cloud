@@ -28,6 +28,7 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!--引入被调用方的接口层，如果被调用方的feign的版本和当前版本不一致需要排除-->
         <dependency>
             <groupId>com.imooc</groupId>
             <artifactId>feign-client-intf</artifactId>

@@ -16,11 +16,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class RequestCacheService {
 
+    // 这里注入Myservice，注入IService的话由于存在有两个IService的类型会报错
     @Autowired
     private MyService service;
 
-    @CacheResult
-    @HystrixCommand(commandKey = "cacheKey")
+
+    @CacheResult // 开启缓存
+    @HystrixCommand(commandKey = "cacheKey") // 配置方法的commandKey，可以替代Feign.configKey()方法获取的key，更加的方便
     public Friend requestCache(@CacheKey String name) {
         log.info("request cache " + name);
         Friend friend = new Friend();

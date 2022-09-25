@@ -13,7 +13,6 @@
     <artifactId>hystrix-fallback</artifactId>
 
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -29,12 +28,14 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!--hystrix-fallback 是个服务调用者-->
         <dependency>
             <groupId>com.imooc</groupId>
             <artifactId>feign-client-intf</artifactId>
             <version>${project.version}</version>
         </dependency>
 
+        <!--主角-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>

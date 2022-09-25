@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * Created by 半仙.
  */
+
+// @FeignClient的注解生成代理类，供调用方远程调用使用
 @FeignClient("feign-client")
 public interface IService {
 

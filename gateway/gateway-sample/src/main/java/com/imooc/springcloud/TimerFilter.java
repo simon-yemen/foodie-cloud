@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Component
-// GlobalFilter 全局过滤器
+// GlobalFilter 全局过滤器,作用于全局路由
 public class TimerFilter implements GatewayFilter, Ordered {
 
     @Override

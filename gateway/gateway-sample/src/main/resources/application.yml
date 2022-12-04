@@ -3,15 +3,19 @@ spring:
     name: gateway-service
   cloud:
     gateway:
+      # 开启基于注册中心的自动路由
       discovery:
         locator:
           enabled: true
+          # 路由规则可以小写
           lower-case-service-id: true
       routes:
       - id: feignclient
         uri: lb://FEIGN-CLIENT
         predicates:
+        # 配置path断言
         - Path=/yml/**
+        # localhost:8080/yml/sayHi -> localhost:8080/sayHi -> FEIGN-CLIENT/sayHi
         filters:
         - StripPrefix=1
 

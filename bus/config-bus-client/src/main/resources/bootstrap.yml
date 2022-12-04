@@ -8,6 +8,7 @@ spring:
     password: guest
   cloud:
     stream:
+      # 当同时存在kafka和rabbit依赖时需要设置default
       default-binder: rabbit
     config:
       name: config-consumer

@@ -25,7 +25,7 @@
         </encoder>
     </appender>
 
-    <!-- Logstash -->
+    <!-- Logstash Logstash是直接收集日志的组件-->
     <!-- 为logstash输出的JSON格式的Appender -->
     <appender name="logstash"
               class="net.logstash.logback.appender.LogstashTcpSocketAppender">

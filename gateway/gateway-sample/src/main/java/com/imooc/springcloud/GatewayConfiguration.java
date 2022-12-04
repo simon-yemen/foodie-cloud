@@ -37,6 +37,7 @@ public class GatewayConfiguration {
                     .uri("lb://FEIGN-CLIENT")
                 )
                 .route(r -> r.path("/seckill/**")
+                        // after断言，当前时间推迟1分钟后生效（即服务启动后1min后该rout开始生效）
                         .and().after(ZonedDateTime.now().plusMinutes(1))
 //                        .and().before()
 //                        .and().between()
@@ -44,7 +45,6 @@ public class GatewayConfiguration {
                         .uri("lb://FEIGN-CLIENT")
                 )
                 .build();
-
     }
 
 }

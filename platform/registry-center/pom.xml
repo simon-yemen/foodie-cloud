@@ -19,11 +19,19 @@
         </dependency>
     </dependencies>
 
+
+    <!--
+   因为之前有些模块的打包插件的版本也没有添加是可以正常使用的，但是今天突然不行了，
+   后来发现spring boot 3.0版最近正式发布了，3.0版是基于java 17 的，不指定的话，
+   默认引用最新的导致这种问题的发生，所以大家做的时候，所有模块的打包插件的版本一定要指定一下，避免出现这种问题
+   -->
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--这里需要指定版本号了-->
+                <version>2.3.0.RELEASE</version>
                 <configuration>
                     <mainClass>com.imooc.EurekaServerApplication</mainClass>
                 </configuration>

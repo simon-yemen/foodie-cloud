@@ -6,7 +6,7 @@ spring:
     name: config-server
   ## rabbitMQ用于Bus推送
   rabbitmq:
-    host: localhost
+    host: 172.16.86.103
     port: 5672
     username: guest
     password: guest
@@ -27,7 +27,13 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:20000/eureka/
+      defaultZone: http://172.16.86.103:20000/eureka/
+  instance:
+    instance-id: ${eureka.instance.ip-address}:${server.port}
+    ip-address: 172.16.86.103
+    prefer-ip-address: true
+
+
 
 ## 开启所有actuator-endpoint
 management:
